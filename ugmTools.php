@@ -36,7 +36,7 @@ if (!function_exists("ugm_module_set_meta")) {
 		$sql = "select conf_value
           from      " . $xoopsDB->prefix("config") . "
           where  `conf_name`='meta_keywords'"; //die($sql);
-		$result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
+		$result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, web_error());
 		$DBV = $xoopsDB->fetchArray($result);
 		//設定頁面關鍵字（用 , 隔開）
 		$meta_keywords = $DBV['conf_value'] ? $meta_keywords . "," . $DBV['conf_value'] : $meta_keywords;
@@ -44,7 +44,7 @@ if (!function_exists("ugm_module_set_meta")) {
 		$sql = "select conf_value
           from      " . $xoopsDB->prefix("config") . "
           where  `conf_name`='meta_description'"; //die($sql);
-		$result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
+		$result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, web_error());
 		$DBV = $xoopsDB->fetchArray($result);
 		//設定關鍵字說明
 		$meta_description = $DBV['conf_value'] ? $meta_description . "," . $DBV['conf_value'] : $meta_description;
@@ -90,7 +90,7 @@ if (!function_exists("get_ugm_module_max_sort")) {
 		$and_key = $kind_key ? " where `$kind_key`='{$kind}'" : "";
 
 		$sql = "select max({$col}) from " . $xoopsDB->prefix($tbl) . "{$and_key}";
-		$result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
+		$result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, web_error());
 		list($sort) = $xoopsDB->fetchRow($result);
 		return ++$sort;
 	}
@@ -108,7 +108,7 @@ if (!function_exists("get_ugm_module_sql")) {
 		}
 
 		//$sql = "select * from ".$xoopsDB->prefix($tbl)." where sn='{$sn}'";
-		$result = $xoopsDB->queryF($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
+		$result = $xoopsDB->queryF($sql) or redirect_header($_SERVER['PHP_SELF'], 3, web_error());
 		return $xoopsDB->fetchArray($result);
 	}
 }
@@ -125,7 +125,7 @@ if (!function_exists("get_ugm_module_tbl")) {
 		}
 
 		$sql = "select * from " . $xoopsDB->prefix($tbl) . " where sn='{$sn}'";
-		$result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
+		$result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, web_error());
 		$data = $xoopsDB->fetchArray($result);
 		return $data;
 	}
@@ -273,7 +273,7 @@ if (!function_exists("check_tbl_col_sn")) {
 
 		$sql = "select count(*) from " . $xoopsDB->prefix($tbl) . "
           where `{$col}`='{$sn}'";
-		$result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
+		$result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, web_error());
 		list($count) = $xoopsDB->fetchRow($result);
 		if ($count) {
 			return true;
@@ -292,7 +292,7 @@ if (!function_exists("get_xoops_admin_email")) {
           from      " . $xoopsDB->prefix("groups_users_link") . " as a
           left join " . $xoopsDB->prefix("users") . "             as b on a.uid = b.uid
           where `groupid`='1'"; //die($sql);
-		$result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
+		$result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, web_error());
 		while ($all = $xoopsDB->fetchArray($result)) {
 			$DBV[] = $all['email'];
 		}
@@ -423,7 +423,7 @@ if (!function_exists("get_modules_system_var")) {
 		$sql = "select `{$key}`
       from " . $xoopsDB->prefix($tbl) . "
       where `kind`='{$kind}' and `name`='{$name}' and enable='1'"; //die($sql);
-		$result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
+		$result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, web_error());
 		list($value) = $xoopsDB->fetchRow($result);
 		return $value;
 	}
@@ -446,7 +446,7 @@ if (!function_exists("check_modules_system_var")) {
 		$sql = "select `sn`
       from " . $xoopsDB->prefix($tbl) . "
       where `kind`='{$kind}' and `name`='{$name}'"; //die($sql);
-		$result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
+		$result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, web_error());
 		list($sn) = $xoopsDB->fetchRow($result);
 		return $sn;
 	}
@@ -471,7 +471,7 @@ if (!function_exists("create_modules_system_var")) {
 		$sql = "insert into " . $xoopsDB->prefix($tbl) . "
           (`name`,`title`,`value`,`description`,`formtype`,`valuetype`,`sort`,`enable`,`kind`) values
           ('{$name}','{$title}','{$value}','{$description}','{$formtype}','{$valuetype}','1','1','{$kind}')"; //die($sql);
-		$xoopsDB->queryF($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
+		$xoopsDB->queryF($sql) or redirect_header($_SERVER['PHP_SELF'], 3, web_error());
 		return true;
 	}
 }
@@ -511,7 +511,7 @@ if (!function_exists("modules_system_list")) {
           from " . $xoopsDB->prefix($tbl) . " as a
           where kind='{$kind}' and enable='1'
           order by a.sort"; //die($sql);
-		$result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
+		$result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, web_error());
 
 		$myts = MyTextSanitizer::getInstance();
 		$i = 1;
@@ -586,7 +586,7 @@ if (!function_exists("checkIsRecord")) {
 
 		$sql = "select count(*) from " . $xoopsDB->prefix($tbl) . "
             where `{$key}`='{$sn}'";
-		$result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
+		$result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, web_error());
 		list($count) = $xoopsDB->fetchRow($result);
 		if ($count) {
 			return true;
@@ -651,7 +651,7 @@ if (!function_exists("get_kind_arr_stop_level")) {
 function ugm_module_debug_mode($v = 0) {
 	global $xoopsDB;
 	$sql = "update " . $xoopsDB->prefix("config") . " set conf_value='$v' where conf_name='debug_mode'";
-	$xoopsDB->queryF($sql) or die($sql . "<br>" . mysql_error());
+	$xoopsDB->queryF($sql) or die($sql . "<br>" . web_error());
 }
 ###########################################################
 #  新增點閱數
@@ -664,7 +664,7 @@ function InsertCounteAddOne($sn, $tbl) {
           set counter =  counter+1
           where  sn ='{$sn}'
   "; //die($sql);
-	$xoopsDB->queryF($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
+	$xoopsDB->queryF($sql) or redirect_header($_SERVER['PHP_SELF'], 3, web_error());
 	return;
 }
 ###########################################################
@@ -680,7 +680,7 @@ function ugm_module_get_tbl_option($default="",$tbl="",$admin="1") {
 				 ". $xoopsDB->prefix($tbl) ."
 				 ". $and_key ."
          order by sort"; //die($sql) ;
-	$result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
+	$result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, web_error());
 	$rows="";
 	while ($row = $xoopsDB->fetchArray($result)) {
 		$selected = ($default == $row['sn']) ? " selected" : "";
@@ -728,7 +728,7 @@ function get_ForeignKeyMainOption($tbl="",$kind_select = "", $admin = true) {
           {$and_key}
           order by sort"; //die($sql);
 
-	$result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
+	$result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, web_error());
 	$kind_option = "";
 	while ($row = $xoopsDB->fetchArray($result)) {
 		//以下會產生這些變數： $sn , $ofsn , $title , $enable  ,$sort url target

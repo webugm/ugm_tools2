@@ -21,7 +21,7 @@ function chk_chk1(){
 function go_update1(){
 	global $xoopsDB;
 	$sql="ALTER TABLE ".$xoopsDB->prefix("資料表")." ADD `欄位` smallint(5) NOT NULL";
-	$xoopsDB->queryF($sql) or redirect_header(XOOPS_URL,3,  mysql_error());
+	$xoopsDB->queryF($sql) or redirect_header(XOOPS_URL,3,  web_error());
 
 	return true;
 }
