@@ -1,0 +1,95 @@
+/* 針對XOOPS 2.5.*版之前的後台做微調 */
+
+body ,div , a , li ,td ,th{
+  font-size: 12px;
+}
+
+td div{
+  font-size:12pt;
+}
+
+.tooltip {
+  opacity: 100;
+  position: relative;
+  display: inline;
+  filter:none;
+}
+
+.table-striped tbody > tr:nth-child(2n+1) > th ,th  {
+  background-color:rgb(46, 50, 59);
+  /*color: white;*/
+}
+
+li {
+  line-height: 1em;
+}
+
+a.btn {
+  font-weight: normal;
+  background-color: initial;
+  color: white;
+}
+
+
+input[type="submit"]:hover, input[type="reset"]:hover, input[type="button"]:hover, .xo-formbuttons:hover, .formButton:hover, button:hover{
+  /*padding: 6px 12px;*/
+}
+
+/* menu */
+div.rmmenuicon{
+    margin: 3px;
+    font-family: Tahoma, Arial, Helvetica;
+    text-align: center;
+}
+div.rmmenuicon a {
+    display: block; float: left;
+    height: 75px !important;
+    height: 75px;
+    width: 75px !important;
+    width: 75px;
+    vertical-align: middle;
+    text-decoration : none;
+    border: 1px solid #CCCCCC;
+    padding: 2px 5px 1px 5px;
+    margin: 3px;
+    color: #666666;
+
+    background-color: #f0f0f0;
+    -moz-border-radius: 6px;
+    -webkit-border-radius: 6px;
+    -khtml-border-radius: 6px;
+     border-radius: 6px;
+
+
+}
+/* admin/index.php menu_div */
+div.rmmenuicon img { margin-top: 8px; margin-bottom: 8px; }
+div.rmmenuicon a span {
+    font-size: 11px;
+    font-weight: bold;
+    display: block;
+}
+div.rmmenuicon a:hover{
+    background-color: #FFF6C1;
+    border: 1px solid #FF9900;
+    color: #1E90FF;
+}
+div.rmmenuicon a:hover span{
+    text-decoration: none;
+}
+
+
+div.CPbigTitle{
+    font-size: 12px;
+    color: #606060;
+    background: no-repeat left top;
+    font-weight: bold;
+    height: 30px;
+    vertical-align: middle;
+    padding: 5px 0 0 40px;
+    border-bottom: 1px solid #393e41;
+}
+
+.expanded{
+  letter-spacing:0;
+}
