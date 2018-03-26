@@ -8,7 +8,53 @@ defined('XOOPS_ROOT_PATH') || die("XOOPS root path not defined");
 include_once "ugm_tools_header.php";
 
 
+#####################################################################################
+#  取得系統變數值
+#  get_modules_system_var($tbl,$kind,$name,$key);
+#  (資料表,類別,欄名,資料庫欄名)#
+#  給前台使用，只撈 enable=1
+#####################################################################################
+if (!function_exists("get_modules_system_var")) {
+	function get_modules_system_var($tbl = "", $kind = "", $name = "", $key = "value") {
+		global $xoopsDB;
+		if (empty($tbl) or empty($kind) or empty($name)) {
+			return;
+		}
 
+		$sql = "select `{$key}`
+      from " . $xoopsDB->prefix($tbl) . "
+      where `kind`='{$kind}' and `name`='{$name}' and enable='1'"; //die($sql);
+		$result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, web_error());
+		list($value) = $xoopsDB->fetchRow($result);
+		return $value;
+	}
+}
+
+#####################################################################################
+#  取得系統變數值
+#  get_modules_system_var($tbl,$kind,$name,$key);
+#  (資料表,類別,欄名,資料庫欄名)#
+#  給前台使用，只撈 enable=1
+#####################################################################################
+if (!function_exists("get_modules_system_varBYsn")) {
+	function get_modules_system_varBYsn($sn,$tbl) {
+		global $xoopsDB;
+		if (empty($sn) or empty($tbl)) {
+			return;
+		}
+
+		$sql = "select `value`
+      from " . $xoopsDB->prefix($tbl) . "
+      where `sn`='{$sn}'and enable='1'"; //die($sql);
+		$result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, web_error());
+		list($value) = $xoopsDB->fetchRow($result);
+		return $value;
+	}
+}
+
+// function get_config_conf_valueBYconf_name($name){
+	
+// }
 
 
 
@@ -407,27 +453,6 @@ if (!function_exists("get_use_enable_option")) {
 	}
 }
 
-#####################################################################################
-#  取得系統變數值
-#  get_modules_system_var($tbl,$kind,$name,$key);
-#  (資料表,類別,欄名,資料庫欄名)#
-#  給前台使用，只撈 enable=1
-#####################################################################################
-if (!function_exists("get_modules_system_var")) {
-	function get_modules_system_var($tbl = "", $kind = "", $name = "", $key = "value") {
-		global $xoopsDB;
-		if (empty($tbl) or empty($kind) or empty($name)) {
-			return;
-		}
-
-		$sql = "select `{$key}`
-      from " . $xoopsDB->prefix($tbl) . "
-      where `kind`='{$kind}' and `name`='{$name}' and enable='1'"; //die($sql);
-		$result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, web_error());
-		list($value) = $xoopsDB->fetchRow($result);
-		return $value;
-	}
-}
 
 #####################################################################################
 #  檢查資料表是否有系統變數

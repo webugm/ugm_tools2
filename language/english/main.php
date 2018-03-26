@@ -56,10 +56,6 @@ define("_MD_UGMMODULE_SORT", "排序");
 define("_MD_UGMMODULE_NO_DEL", "分類已使用，目前無法刪除！！");
 define("_MD_UGMMODULE_ROOT", "根目錄");
 define("_MD_UGMMODULE_FUN", "功能");
-define("_MD_UGMMODULE_ITEM", "序");
-
-define("_MD_UGMMODULE_VARNAME", "變數名稱");
-define("_MD_UGMMODULE_VARVALUE", "變數值");
 
 define("_MD_UGMMODULE_CREATE_SUB", "建立子類別");
 define("_MD_UGMMODULE_NAV_CREATE_SUB", "建立子選單");
