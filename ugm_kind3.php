@@ -89,9 +89,9 @@ default:
 
 /*-----------秀出結果區--------------*/
 #CSS
-$xoTheme->addStylesheet(XOOPS_URL . "/modules/ugm_tools/css/xoops_adm3.css");
-$xoTheme->addStylesheet(XOOPS_URL . "/modules/ugm_tools/css/forms.css");
-$xoTheme->addStylesheet(XOOPS_URL . "/modules/ugm_tools/css/module_b3.css");
+$xoTheme->addStylesheet(XOOPS_URL . "/modules/ugm_tools2/css/xoops_adm3.css");
+$xoTheme->addStylesheet(XOOPS_URL . "/modules/ugm_tools2/css/forms.css");
+$xoTheme->addStylesheet(XOOPS_URL . "/modules/ugm_tools2/css/module_b3.css");
 //$xoopsTpl->assign("isAdmin" , true);
 $file_name = basename($_SERVER['PHP_SELF']);
 // $moduele_admin = new ModuleAdmin();
