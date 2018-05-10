@@ -14,18 +14,24 @@ $ugmKind = new ugmKind($DIRNAME,$kind,$stopLevel);
 
 switch ($op) {
 case "opUpdateSort": //更新排序
+  #ajax必須關除錯
+  ugm_module_debug_mode(0);//強制關除錯
   echo opUpdateSort();
   transaction();
   XoopsCache::clear();
   exit;
 
 case "opSaveDrag": //移動類別儲存
+  #ajax必須關除錯
+  ugm_module_debug_mode(0);//強制關除錯
   echo opSaveDrag();
   transaction();
   XoopsCache::clear();
   exit;
 //更新狀態
 case "opUpdateEnable":
+  #ajax必須關除錯
+  ugm_module_debug_mode(0);//強制關除錯
   opUpdateEnable();
   transaction();
   XoopsCache::clear();
@@ -34,6 +40,8 @@ case "opUpdateEnable":
 
 //更新外連狀態
 case "opUpdateTarget":
+  #ajax必須關除錯
+  ugm_module_debug_mode(0);//強制關除錯
   opUpdateTarget();
   transaction();
   XoopsCache::clear();
