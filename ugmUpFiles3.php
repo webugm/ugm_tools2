@@ -386,7 +386,7 @@ class ugmUpFiles {
 	public function get_rowPicSingleUrl($col_name,$col_sn,$thumb) {
 		global $xoopsDB;
 		$sql = "select * 
-						from `{$this->tbl}`
+				from `{$this->tbl}`
             where `col_name`='{$col_name}' and `col_sn`='{$col_sn}'
             order by sort
             limit 1
@@ -409,5 +409,23 @@ class ugmUpFiles {
 		return $thumb_pic;
 	}
 	
+	//得到上傳檔案src(只有一張)
+	public function get_rowFileSingleUrl($col_name,$col_sn) {
+		global $xoopsDB;
+		$src = "";
+		$sql = "select *
+				from `{$this->tbl}`
+                where `col_name`='{$col_name}' and `col_sn`='{$col_sn}'
+                order by sort
+                limit 1
+            "; //die($sql);
+		$result = $xoopsDB->queryF($sql) or redirect_header($_SERVER['PHP_SELF'], 3, web_error() . "<p>$sql</p>");
+		$row = $xoopsDB->fetchArray($result);
+		//以下會產生這些變數： $files_sn, $col_name, $col_sn, $sort, $kind, $file_name, $file_type, $file_size, $description
+		if ($row['files_sn'] and $row['kind'] == "file") {
+			$src = "{$this->ugmUpFilesUrl}/{$row['file_name']}";
+		}
+		return $src;
+	}
 
 }
