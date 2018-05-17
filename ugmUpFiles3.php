@@ -423,7 +423,7 @@ class ugmUpFiles {
 		$row = $xoopsDB->fetchArray($result);
 		//以下會產生這些變數： $files_sn, $col_name, $col_sn, $sort, $kind, $file_name, $file_type, $file_size, $description
 		if ($row['files_sn'] and $row['kind'] == "file") {
-			$src = "{$this->ugmUpFilesUrl}/{$row['file_name']}";
+			$src = $this->ugmUpFilesUrl.$row['file_name'];
 		}
 		return $src;
 	}
