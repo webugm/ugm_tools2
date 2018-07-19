@@ -331,9 +331,9 @@ if (!function_exists("get_xoops_admin_email")) {
 	}
 }
 
-################################################################################
+###############################################
 #   燈箱打包碼(內容,標題)
-################################################################################
+###############################################
 if (!function_exists("show_lytebox_html")) {
 	function show_lytebox_html($content, $title) {
 		global $xoopsModule;
@@ -363,9 +363,10 @@ if (!function_exists("show_lytebox_html")) {
     ";
 		return $main;
 	}
-} ################################################################################
+} 
+#############################################
 #   燈箱打包碼(內容,標題)
-################################################################################
+###############################################
 if (!function_exists("show_lytebox_html_b3")) {
 	function show_lytebox_html_b3($content, $title) {
 		global $xoopsModule;
@@ -406,6 +407,39 @@ if (!function_exists("show_lytebox_html_b3")) {
   </body>
   </html>
   ";
+		return $main;
+	}
+} 
+
+#############################################
+#   燈箱打包碼(內容)
+###############################################
+if (!function_exists("show_lytebox_html_b4")) {
+	function show_lytebox_html_b4($content,$title) {
+		
+		$main="
+		  <!DOCTYPE html>
+		  <html lang='zh-Hant-TW'>
+		    <head>
+		      <!-- Required meta tags -->
+		      <meta charset='utf-8'>
+		      <meta name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no'>
+
+		      <!-- Bootstrap CSS -->
+		      <link rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css' integrity='sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4' crossorigin='anonymous'>
+					
+					<!-- Bootstrap Js -->
+					<script src='https://code.jquery.com/jquery-3.3.1.min.js' integrity='sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=' crossorigin='anonymous'></script>
+					<script src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js' integrity='sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ' crossorigin='anonymous'></script>
+					<script src='https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js' integrity='sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm' crossorigin='anonymous'></script>
+
+		      <title>{$title}</title>
+		    </head>
+		    <body>
+		    	{$content}
+		    </body>
+		  </html>
+		";
 		return $main;
 	}
 }

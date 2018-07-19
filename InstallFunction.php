@@ -129,6 +129,16 @@ if (!function_exists("go_addColumn")) {
 	}
 
 }
+########################################
+# 增加外鍵
+# $sql
+########################################
+if (!function_exists("go_addForeignKey")) {
+	function go_addForeignKey($sql) {
+		global $xoopsDB;
+		$xoopsDB->queryF($sql);
+	}	
+}
 
 ########################################
 # 增加資料表
