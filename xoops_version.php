@@ -3,7 +3,7 @@ $modversion = array();
 
 //---模組基本資訊---//
 $modversion['name']        = 'ugm_tools2';
-$modversion['version']     = 1.00;
+$modversion['version']     = 1.01;
 $modversion['description'] = '模組工具2';
 $modversion['author']      = '郭俊良';
 $modversion['credits']     = '育將電腦工作室';

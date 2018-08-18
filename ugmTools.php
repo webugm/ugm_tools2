@@ -167,6 +167,7 @@ if (!function_exists("get_ugm_module_tbl")) {
 ###############################################################################
 #  立即寄出
 ###############################################################################
+if (!function_exists('send_now')) {
 function send_now($email_arr, $subject, $content) {
 	global $xoopsConfig, $xoopsDB;
 	//sendMail($email, $subject, $body, $headers)
@@ -186,6 +187,7 @@ function send_now($email_arr, $subject, $content) {
 		}
 	}
 	return $msg;
+}
 }
 ###############################################################################
 #  前台工具列

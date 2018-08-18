@@ -1,0 +1,12 @@
+.block_admin{
+  position:absolute;
+  top:-20px;
+  right:-20px;
+  z-index:10000;
+  width: 16px;
+  height: 16px;
+  background-image: url("../images/block/block_admin.png");
+}
+.block_admin:hover{
+  background-image: url("../images/block/block_admin_hover.png");
+}
