@@ -3,7 +3,7 @@ $modversion = array();
 
 //---模組基本資訊---//
 $modversion['name']        = 'ugm_tools2';
-$modversion['version']     = 1.01;
+$modversion['version']     = 1.02;
 $modversion['description'] = '模組工具2';
 $modversion['author']      = '郭俊良';
 $modversion['credits']     = '育將電腦工作室';
@@ -14,7 +14,7 @@ $modversion['image']       = 'images/logo.png';
 $modversion['dirname']     = basename(dirname(__FILE__));
 
 //---模組狀態資訊---//
-$modversion['release_date']        = '2018-03-03';
+$modversion['release_date']        = '2018-08-28';
 $modversion['module_website_url']  = 'https://github.com/webugm/ugm_tools2';
 $modversion['module_website_name'] = 'ugm_tools2';
 $modversion['module_status']       = 'release';
@@ -22,7 +22,7 @@ $modversion['author_website_url']  = 'https://www.ugm.com.tw';
 $modversion['author_website_name'] = '育將電腦工作室';
 $modversion['min_php']             = 5.2;
 $modversion['min_xoops']           = '2.5';
-$modversion['min_tadtools']        = '1.20';
+$modversion['min_tadtools']        = '3.2';
 
 //---paypal資訊---//
 $modversion['paypal']                  = array();

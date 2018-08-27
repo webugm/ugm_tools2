@@ -97,27 +97,26 @@ default:
 
 /*-----------秀出結果區--------------*/
 #CSS
-$xoTheme->addStylesheet(XOOPS_URL . "/modules/ugm_tools2/css/xoops_adm3.css");
 $xoTheme->addStylesheet(XOOPS_URL . "/modules/ugm_tools2/css/forms.css");
 $xoTheme->addStylesheet(XOOPS_URL . "/modules/ugm_tools2/css/module_b3.css");
-//$xoopsTpl->assign("isAdmin" , true);
 $file_name = basename($_SERVER['PHP_SELF']);
 // $moduele_admin = new ModuleAdmin();
 // $xoopsTpl->assign("Navigation", $moduele_admin->addNavigation($file_name));
 $xoopsTpl->assign("labelTitle", $foreign[$kind]['title']);
 $xoopsTpl->assign("op", $op);
-$xoopsTpl->assign("DIRNAME", $DIRNAME);
+//$xoopsTpl->assign("DIRNAME", $DIRNAME);
 $xoopsTpl->assign("action", $file_name);
+$xoopsTpl->assign("moduleMenu", $moduleMenu);
 
-#相容舊版jquery
-$ver = intval(str_replace('.', '', substr(XOOPS_VERSION, 6, 5)));
-if ($ver >= 259){
-  $xoTheme->addScript('modules/tadtools/jquery/jquery-migrate-3.0.0.min.js');
-}else{
-  $xoTheme->addScript('modules/tadtools/jquery/jquery-migrate-1.4.1.min.js');
-}
+// #相容舊版jquery(這個在這裡引入會有問題)
+// $ver = intval(str_replace('.', '', substr(XOOPS_VERSION, 6, 5)));
+// if ($ver >= 259){
+//   $xoTheme->addScript('modules/tadtools/jquery/jquery-migrate-3.0.0.min.js');
+// }else{
+//   $xoTheme->addScript('modules/tadtools/jquery/jquery-migrate-1.4.1.min.js');
+// }
 get_jquery(true);
-include_once 'footer.php';
+include_once XOOPS_ROOT_PATH . '/footer.php';
 /*-----------功能函數區--------------*/
 ###########################################################
 #  列出所有類別的資料
@@ -154,7 +153,7 @@ function opList() {
   #防止偽造表單
   $token = getTokenHTML();
   $xoopsTpl->assign("token", $token);
-  print_r($listHtml);die();
+  //print_r($listHtml);die();
 
 }
 
@@ -162,14 +161,13 @@ function opList() {
 #  編輯表單
 ###########################################################
 function opForm($sn = "") {
-  global $xoopsDB,$xoopsTpl,$ugmKind,$foreign,$forms;
+  global $xoopsDB,$xoopsTpl,$ugmKind,$foreign,$forms,$formsSwitch;
   $xoopsTpl->assign('forms', $forms); 
 
   $kind = $ugmKind->get_kind(); //關鍵字
   $tbl = $ugmKind->get_tbl(); //資料表
   $stopLevel = $ugmKind->get_stopLevel(); //層次
   //$moduleName = $ugmKind->get_moduleName(); //模組名稱
-
   //----------------------------------*/
   $_GET['ofsn'] = !isset($_GET['ofsn']) ? 0 : intval($_GET['ofsn']);
 
@@ -204,13 +202,22 @@ function opForm($sn = "") {
   //設定「kind」欄位預設值
   $row['kind'] = (!isset($row['kind'])) ? $ugmKind->get_kind() : $row['kind'];
   #----以上為必選
+
+  #外連
+  if(isset($formsSwitch['target'])){
+    $row['target'] = (!isset($row['target'])) ? "0": $row['target'];
+  }
+  #網址
+  if(isset($formsSwitch['url'])){
+    $row['url'] = (!isset($row['url'])) ? "": $row['url'];
+  }
   #備註
-  if(isset($foreign[$kind]['form']['ps'])){
+  if(isset($formsSwitch['ps'])){
     $row['ps'] = (!isset($row['ps'])) ? "": $row['ps'];
   }
 
   #圖片
-  if(isset($foreign[$kind]['form']['single_img'])){
+  if(isset($formsSwitch['single_img'])){
     #----單檔圖片上傳
     $moduleName = $ugmKind->get_moduleName(); //模組名稱
     $subdir = $kind;                          //子目錄
@@ -238,7 +245,7 @@ function opForm($sn = "") {
 #  新增資料
 ###########################################################
 function opInsert() {
-  global $xoopsDB,$ugmKind,$foreign,$forms;
+  global $xoopsDB,$ugmKind,$formsSwitch;
   //---- 過濾資料 -----------------------------------------*/
   $myts = &MyTextSanitizer::getInstance();
   #驗證token
@@ -262,28 +269,28 @@ function opInsert() {
   $values=["'{$_POST['ofsn']}'","'{$_POST['title']}'","'{$_POST['enable']}'","'{$_POST['kind']}'","'{$_POST['sort']}'"];
  
   #網址
-  if(isset($foreign[$kind]['form']['url'])){
+  if(isset($formsSwitch['url'])){
     $_POST['url'] = $myts->addSlashes($_POST['url']);//
     $col[]="`url`";
     $values[]="'{$_POST['url']}'";
   }
 
   #外連
-  if(isset($foreign[$kind]['form']['target'])){
+  if(isset($formsSwitch['target'])){
     $_POST['target'] = intval($_POST['target']);//外連
     $col[]="`target`";
     $values[]="'{$_POST['target']}'";
   }
  
   #內容
-  if(isset($foreign[$kind]['form']['content'])){
+  if(isset($formsSwitch['content'])){
     $_POST['content'] = $myts->addSlashes($_POST['content']);
     $col[]="`content`";
     $values[]="'{$_POST['content']}'";
   }
 
   #備註
-  if(isset($foreign[$kind]['form']['ps'])){
+  if(isset($formsSwitch['ps'])){
     $_POST['ps'] = $myts->addSlashes($_POST['ps']);
     $col[]="`ps`";
     $values[]="'{$_POST['ps']}'";
@@ -301,7 +308,7 @@ function opInsert() {
   //取得最後新增資料的流水編號
   $sn = $xoopsDB->getInsertId();
 
-  if(isset($foreign[$kind]['form']['single_img'])){
+  if(isset($formsSwitch['single_img'])){
     #----單圖上傳  
     $moduleName = $ugmKind->get_moduleName();             //專案名稱
     $subdir = $kind; //子目錄
@@ -311,8 +318,8 @@ function opInsert() {
     $col_sn = $sn;                                        //商品流水號
     $name = "single_img";                                        //欄位名稱
     $multiple = false;                                    //單檔 or 多檔上傳
-    $main_width = $foreign[$kind]['form']['single_img']['main_width'];   //大圖壓縮尺吋，-1則不壓縮
-    $thumb_width = $foreign[$kind]['form']['single_img']['thumb_width']; //小圖壓縮尺吋
+    $main_width = $formsSwitch['single_img']['main_width'];   //大圖壓縮尺吋，-1則不壓縮
+    $thumb_width = $formsSwitch['single_img']['thumb_width']; //小圖壓縮尺吋
     $ugmUpFiles->upload_file($name,$col_name,$col_sn,$multiple,$main_width,$thumb_width);
     #------------------------------------------------
   } 
@@ -324,7 +331,7 @@ function opInsert() {
 #  更新資料
 ###########################################################
 function opUpdate($sn = "") {
-  global $xoopsDB,$ugmKind,$foreign;  
+  global $xoopsDB,$ugmKind,$formsSwitch;  
   if (!$sn) {
     redirect_header($_SESSION['returnUrl'], 3, "更新資料錯誤！！");
   }
@@ -361,22 +368,22 @@ function opUpdate($sn = "") {
   $updates = ["`ofsn`='{$_POST['ofsn']}'","`title`='{$_POST['title']}'","`enable`='{$_POST['enable']}'","`kind`   ='{$_POST['kind']}'"];
 
  
-  if(isset($foreign[$kind]['form']['url'])){
+  if(isset($formsSwitch['url'])){
     $_POST['url'] = $myts->addSlashes($_POST['url']);//網址
     $updates[]="`url`='{$_POST['url']}'";
   }
 
-  if(isset($foreign[$kind]['form']['target'])){
+  if(isset($formsSwitch['target'])){
     $_POST['target'] = intval($_POST['target']);//外連
     $updates[]="`target`='{$_POST['target']}'";
   }
  
-  if(isset($foreign[$kind]['form']['content'])){
+  if(isset($formsSwitch['content'])){
     $_POST['content'] = $myts->addSlashes($_POST['content']);//外連
     $updates[]="`content`='{$_POST['content']}'";
   }
  
-  if(isset($foreign[$kind]['form']['ps'])){
+  if(isset($formsSwitch['ps'])){
     $_POST['ps'] = $myts->addSlashes($_POST['ps']);//外連
     $updates[]="`ps`='{$_POST['ps']}'";
   }
@@ -388,7 +395,7 @@ function opUpdate($sn = "") {
           where sn='{$_POST['sn']}'";//die($sql);
   $result = $xoopsDB->queryF($sql) or redirect_header(XOOPS_URL, 3, web_error());
 
-  if(isset($foreign[$kind]['form']['single_img'])){
+  if(isset($formsSwitch['single_img'])){
     #----單圖上傳  
     $moduleName = $ugmKind->get_moduleName();             //專案名稱
     $subdir = $kind; //子目錄
@@ -398,8 +405,8 @@ function opUpdate($sn = "") {
     $col_sn = $sn;                                        //商品流水號
     $name = "single_img";                                        //欄位名稱
     $multiple = false;                                    //單檔 or 多檔上傳
-    $main_width = $foreign[$kind]['form']['single_img']['main_width'];   //大圖壓縮尺吋，-1則不壓縮
-    $thumb_width = $foreign[$kind]['form']['single_img']['thumb_width']; //小圖壓縮尺吋
+    $main_width = $formsSwitch['single_img']['main_width'];   //大圖壓縮尺吋，-1則不壓縮
+    $thumb_width = $formsSwitch['single_img']['thumb_width']; //小圖壓縮尺吋
     $ugmUpFiles->upload_file($name,$col_name,$col_sn,$multiple,$main_width,$thumb_width);
     #------------------------------------------------
   } 

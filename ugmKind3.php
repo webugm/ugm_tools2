@@ -268,7 +268,7 @@ class ugmKind {
 			if($col == "title"){
 				#新增子類別
 				$addLevelButton = ($this->stopLevel > $level) ? "
-          <a href='?op=opForm&ofsn={$row['sn']}&kind={$row['kind']}' title='IN ({$row['title']}) 建立子類別' class='btn btn-primary btn-xs'>
+          <a href='?op=opForm&ofsn={$row['sn']}&kind={$row['kind']}' title='IN ({$row['title']}) 建立子類別' class='btn-primary btn-xs'>
           	<i class='fa fa-plus' aria-hidden='true'></i>          
           </a>" : "";
 
@@ -282,12 +282,12 @@ class ugmKind {
 				#一般input
 				$html .= "
                       {$folderButton}{$moveButton}
-                      <input type='text' name='title[{$row['sn']}]' value='{$row['title']}' id='title_{$row['sn']}' class='title'  style='width:65%; padding: 6px 12px;'>{$addLevelButton}
+                      <input type='text' name='title[{$row['sn']}]' value='{$row['title']}' id='title_{$row['sn']}' class='kind_title form-control'  style='width:65%;'>{$addLevelButton}
                     ";
 
 			}elseif($col == "url"){	#一般input
 				$html .= "                      
-                      <input type='text' name='url[{$row['sn']}]' value='{$row['url']}' id='url_{$row['sn']}' class='url form-control'  >
+                      <input type='text' name='url[{$row['sn']}]' value='{$row['url']}' id='url_{$row['sn']}' class='kind_url form-control'  >
                   ";
 
 			}elseif($col == "single_img"){
@@ -315,11 +315,11 @@ class ugmKind {
 				if ($row[$col] == 1) {
 					#啟用
 					$target_0 = "本站";
-					$html .= "<a href='?op=opUpdateTarget&sn={$row['sn']}&target=0&kind=" . $this->get_kind() . "' title='{$target_0}' atl='{$target_0}' class='btn btn-success btn-xs'><i class='fa fa-check' aria-hidden='true'></i></a>";
+					$html .= "<a href='?op=opUpdateTarget&sn={$row['sn']}&target=0&kind=" . $this->get_kind() . "' title='{$target_0}' atl='{$target_0}' class='btn-success btn-xs'><i class='fa fa-check' aria-hidden='true'></i></a>";
 				} else {
 					#停用
 					$target_1 = "外連";
-					$html .= "<a href='?op=opUpdateTarget&sn={$row['sn']}&target=1&kind=" . $this->get_kind() . "' title='{$target_1}' atl='{$target_1}' class='btn btn-danger btn-xs'><i class='fa fa-times' aria-hidden='true'></i></a>";
+					$html .= "<a href='?op=opUpdateTarget&sn={$row['sn']}&target=1&kind=" . $this->get_kind() . "' title='{$target_1}' atl='{$target_1}' class='btn-danger btn-xs'><i class='fa fa-times' aria-hidden='true'></i></a>";
 				}
 
 			}elseif($col == "enable"){				
@@ -327,12 +327,12 @@ class ugmKind {
 				if ($row[$col] == 1) {
 					#啟用 
 					$enable_0 = "停用";
-					$html .= "<a href='?op=opUpdateEnable&sn={$row['sn']}&enable=0&kind=" . $this->get_kind() . "' title='{$enable_0}' atl='{$enable_0}' class='btn btn-success btn-xs'><i class='fa fa-check' aria-hidden='true'></i></a>";
+					$html .= "<a href='?op=opUpdateEnable&sn={$row['sn']}&enable=0&kind=" . $this->get_kind() . "' title='{$enable_0}' atl='{$enable_0}' class='btn-success btn-xs'><i class='fa fa-check' aria-hidden='true'></i></a>";
 
 				} else {
 					#停用
 					$enable_1 = "啟用";
-					$html .= "<a href='?op=opUpdateEnable&sn={$row['sn']}&enable=1&kind=" . $this->get_kind() . "' title='{$enable_1}' atl='{$enable_1}' class='btn btn-danger btn-xs'><i class='fa fa-times' aria-hidden='true'></i></a>";
+					$html .= "<a href='?op=opUpdateEnable&sn={$row['sn']}&enable=1&kind=" . $this->get_kind() . "' title='{$enable_1}' atl='{$enable_1}' class='btn-danger btn-xs'><i class='fa fa-times' aria-hidden='true'></i></a>";
 
 				}
 
@@ -342,11 +342,11 @@ class ugmKind {
 					if ($btn == "view") {
 
 					} elseif ($btn == "edit") {
-						$html .= "<a href='?op=opForm&sn={$row['sn']}&kind=" . $this->get_kind() . "' class='btn btn-success btn-xs'>"._EDIT."</a> ";
+						$html .= "<a href='?op=opForm&sn={$row['sn']}&kind=" . $this->get_kind() . "' class='btn btn-xs btn-success'>"._EDIT."</a> ";
 
 					} elseif ($btn == "del") {
 						$disable = $downLevel ?" disabled":"";
-						$html .= "<button type='button' class='btn btn-xs btn-danger btnDel{$disable}'>刪除</button> ";
+						$html .= "<button type='button' class='btn btn-xs btn-danger btnDel{$disable}'>"._DELETE."</button> ";
 
 					}
 				}

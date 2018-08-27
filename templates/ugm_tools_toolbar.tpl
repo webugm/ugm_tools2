@@ -8,13 +8,13 @@
     padding: 0;
   }
   .toolbar_bootstrap_nav li {
-    margin: 0 5px 10px 0;
+    /*margin: 0 5px 10px 0;*/
     padding: 0;
     list-style: none;
     display: inline-block;
   }
   .toolbar_bootstrap_nav a {
-    padding: 3px 6px;
+    /*padding: 3px 6px;*/
     text-decoration: none;
     color: #999;
     line-height: 100%;

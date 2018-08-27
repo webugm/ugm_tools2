@@ -241,15 +241,16 @@ class ugmUpFiles {
 		}
 		#---------------------------------------
 		$files = array();
-		foreach ($_FILES[$name] as $k => $l) {
-			foreach ($l as $i => $v) {
-				if (!array_key_exists($i, $files)) {
-					$files[$i] = array();
+		if($_FILES[$name]){
+			foreach ($_FILES[$name] as $k => $l) {
+				foreach ($l as $i => $v) {
+					if (!array_key_exists($i, $files)) {
+						$files[$i] = array();
+					}
+					$files[$i][$k] = $v; //$file[0][name]=xxx.jpg
 				}
-				$files[$i][$k] = $v; //$file[0][name]=xxx.jpg
-			}
+			}			
 		}
-
 		//處理檔案上傳，檢查是否有上傳$_FILES[$name]['name'][0]
 		if ($files) {
 			#有上傳
