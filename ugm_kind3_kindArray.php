@@ -22,12 +22,12 @@ $forms[0][$col]['width'] = 2;
 // $forms[0][$col]['type'] = "radio";
 // $forms[0][$col]['width'] = 2;
 
-// #父類別   
-// $col = "ofsn";
-// $formsSwitch[$col] = true;
-// $forms[0][$col]['label'] = "父類別";
-// $forms[0][$col]['type'] = $foreign[$kind]['stopLevel'] > 1 ?"select":"hidden";
-// $forms[0][$col]['width'] = 2;
+#父類別   
+$col = "ofsn";
+$formsSwitch[$col] = true;
+$forms[0][$col]['label'] = "父類別";
+$forms[0][$col]['type'] = $foreign[$kind]['stopLevel'] > 1 ?"select":"hidden";
+$forms[0][$col]['width'] = 2;
 
 // #網址   
 // $col = "url";
@@ -36,30 +36,22 @@ $forms[0][$col]['width'] = 2;
 // $forms[1][$col]['type'] = "text";
 // $forms[1][$col]['width'] = 6;
 
-// #圖示   
-// $col = "ps";
-// $formsSwitch[$col] = true;
-// $forms[1][$col]['label'] = "圖示";
-// $forms[1][$col]['type'] = "icon";
-// $forms[1][$col]['width'] = 3;
-
-#副標題   
-$col = "content";
+#圖示   
+$col = "ps";
 $formsSwitch[$col] = true;
-$forms[1][$col]['label'] = "副標題";
-$forms[1][$col]['type'] = "text";
-$forms[1][$col]['width'] = 6;
+$forms[1][$col]['label'] = "圖示";
+$forms[1][$col]['type'] = "icon";
+$forms[1][$col]['width'] = 3;
 
 #圖片   
 $col = "single_img";
 $formsSwitch[$col] = true;
-$formsSwitch[$col]['main_width'] = 1140;
+$formsSwitch[$col]['main_width'] = 768;
 $formsSwitch[$col]['thumb_width'] = 120;
 
-$forms[1][$col]['label'] = "圖片<span>(1140x350)</span>";
+$forms[1][$col]['label'] = "圖片<span>(768x400)</span>";
 $forms[1][$col]['type'] = "single_img";
 $forms[1][$col]['width'] = 3;
-
 
 
 /*---- 定義 List ----*/
@@ -79,10 +71,10 @@ $listHead[$col]['th']['attr']=" class='col-sm-1 text-center'";
 $listHead[$col]['td']['attr']=" class='text-center'";
 $listHead[$col]['td']['imgWidth']=50;//縮圖尺吋
 
-// $col = "ps";
-// $listHead[$col]['th']['title']="圖示";
-// $listHead[$col]['th']['attr']=" class='text-center' style='width:2%;'";
-// $listHead[$col]['td']['attr']=" class='text-center'";
+$col = "ps";
+$listHead[$col]['th']['title']="圖示";
+$listHead[$col]['th']['attr']=" class='text-center' style='width:2%;'";
+$listHead[$col]['td']['attr']=" class='text-center'";
 
 // $col = "target";
 // $listHead[$col]['th']['title']="外連";

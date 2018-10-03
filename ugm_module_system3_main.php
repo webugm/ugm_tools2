@@ -319,6 +319,9 @@ if (!function_exists("ugm_module_system_form")) {
 		//設定「類別」欄位預設值
 		$row['kind'] = (!isset($row['kind'])) ? "" : $row['kind'];
 
+		//設定「類別」欄位預設值
+		$row['options'] = (!isset($row['options'])) ?"" : json_decode($row['options'], true);
+
 		$row['return_url'] = $_SESSION['return_url'];
 
 		$row['op'] = "opInsert";
@@ -390,6 +393,18 @@ if (!function_exists("ugm_module_system_form")) {
 
 			$row['form'] = "{$mColorPicker}<input type='text' class='form-control jscolor' name='value' id='value' value='{$row['value']}'>
 			";
+
+		} elseif ($row['formtype'] == "select"){
+			$options = "";
+			foreach($row['options'] as $k => $v){
+				$selected = ($v == $row['value']) ? " selected":"";
+				$options .= "<option value='{$v}'{$selected}>{$k}</option>";
+			}
+			if($options){				
+				$row['form'] = "<select name='value' class='form-control'>{$options}</select>";
+			}else{
+				$row['form'] = "";
+			}
 
 		}
 

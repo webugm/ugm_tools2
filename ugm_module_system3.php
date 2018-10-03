@@ -216,7 +216,7 @@ if (!function_exists("ugm_module_system_list")) {
 			$DBV['name'] = $myts->htmlSpecialChars($DBV['name']);
 			$DBV['kind'] = $myts->htmlSpecialChars($DBV['kind']);
 			#以表單型態分類
-			if ($DBV['formtype'] == "textbox" or $DBV['formtype'] == "textarea") {
+			if ($DBV['formtype'] == "textbox" or $DBV['formtype'] == "textarea" or $DBV['formtype'] == "select") {
 				#---- 文字框
 				$html = 0;
 				$br = 1;
@@ -318,6 +318,9 @@ if (!function_exists("ugm_module_system_form")) {
 		//設定「類別」欄位預設值
 		$DBV['kind'] = (!isset($DBV['kind'])) ? "" : $DBV['kind'];
 
+		//設定「類別」欄位預設值
+		$DBV['options'] = (!isset($DBV['options'])) ? "" : json_decode($DBV['options'], true);
+
 		$DBV['return_url'] = $_SESSION['return_url'];
 
 		$DBV['op'] = "opInsert";
@@ -391,6 +394,18 @@ if (!function_exists("ugm_module_system_form")) {
 
 			$DBV['form'] = "{$mColorPicker}<input type='text' class='form-control jscolor' name='value' id='value' value='{$DBV['value']}'>
 			";
+
+		} elseif ($DBV['formtype'] == "select"){
+			$options = "";
+			foreach($DBV['options'] as $k => $v){
+				$selected = ($v == $DBV['value']) ? " selected":"";
+				$options .= "<option value='{$v}'{$selected}>{$k}</option>";
+			}
+			if($options){				
+				$DBV['form'] = "<select name='value' class='form-control'>{$options}</select>";
+			}else{
+				$DBV['form'] = "";
+			}
 
 		}
 

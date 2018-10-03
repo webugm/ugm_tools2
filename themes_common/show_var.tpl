@@ -1,4 +1,4 @@
-<{if $xoops_isadmin and $xoops_userid == '1' and $show_var}>
+<{if $xoops_isadmin and $show_var}>
   <style>
     .show_var .red{color:red;}
     .show_var .title{background-color:#64FA74;color:block;font-weight: bold;text-align:center;}

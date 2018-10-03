@@ -17,7 +17,7 @@ case "opUpdateSort": //更新排序
   #ajax必須關除錯
   ugm_module_debug_mode(0);//強制關除錯
   echo opUpdateSort();
-  transaction();
+  transaction($DIRNAME,$kind,$stopLevel);
   XoopsCache::clear();
   exit;
 
@@ -25,7 +25,7 @@ case "opSaveDrag": //移動類別儲存
   #ajax必須關除錯
   ugm_module_debug_mode(0);//強制關除錯
   echo opSaveDrag();
-  transaction();
+  transaction($DIRNAME,$kind,$stopLevel);
   XoopsCache::clear();
   exit;
 //更新狀態
@@ -33,7 +33,7 @@ case "opUpdateEnable":
   #ajax必須關除錯
   ugm_module_debug_mode(0);//強制關除錯
   opUpdateEnable();
-  transaction();
+  transaction($DIRNAME,$kind,$stopLevel);
   XoopsCache::clear();
   redirect_header($_SESSION['returnUrl'], 3, _BP_SUCCESS);
   exit;
@@ -43,7 +43,7 @@ case "opUpdateTarget":
   #ajax必須關除錯
   ugm_module_debug_mode(0);//強制關除錯
   opUpdateTarget();
-  transaction();
+  transaction($DIRNAME,$kind,$stopLevel);
   XoopsCache::clear();
   redirect_header($_SESSION['returnUrl'], 3, _BP_SUCCESS);
   exit;
@@ -51,7 +51,7 @@ case "opUpdateTarget":
 //新增資料
 case "opInsert":
   opInsert();
-  transaction();
+  transaction($DIRNAME,$kind,$stopLevel);
   XoopsCache::clear();
   redirect_header($_SESSION['returnUrl'], 3, _BP_SUCCESS);
   exit;
@@ -59,7 +59,7 @@ case "opInsert":
 //編輯資料
 case "opUpdate":
   opUpdate($sn);
-  transaction();
+  transaction($DIRNAME,$kind,$stopLevel);
   XoopsCache::clear();
   redirect_header($_SESSION['returnUrl'], 3, _BP_SUCCESS);
   exit;
@@ -67,7 +67,7 @@ case "opUpdate":
 //新增資料
 case "opAllInsert":
   opAllInsert();
-  transaction();
+  transaction($DIRNAME,$kind,$stopLevel);
   XoopsCache::clear();
   redirect_header($_SESSION['returnUrl'], 3, _BP_SUCCESS);
   exit;
@@ -80,7 +80,7 @@ case "opForm":
 //刪除資料
 case "opDelete":
   opDelete($sn);
-  transaction();
+  transaction($DIRNAME,$kind,$stopLevel);
   XoopsCache::clear();
   redirect_header($_SESSION['returnUrl'], 3, _BP_DEL_SUCCESS);
   exit;
@@ -161,7 +161,7 @@ function opList() {
 #  編輯表單
 ###########################################################
 function opForm($sn = "") {
-  global $xoopsDB,$xoopsTpl,$ugmKind,$foreign,$forms,$formsSwitch;
+  global $xoopsDB,$xoopsTpl,$ugmKind,$foreign,$forms,$formsSwitch,$module_name;
   $xoopsTpl->assign('forms', $forms); 
 
   $kind = $ugmKind->get_kind(); //關鍵字
@@ -214,6 +214,43 @@ function opForm($sn = "") {
   #備註
   if(isset($formsSwitch['ps'])){
     $row['ps'] = (!isset($row['ps'])) ? "": $row['ps'];
+  }
+  #內容
+  if(isset($formsSwitch['content'])){
+    $row['content'] = (!isset($row['content'])) ? "": $row['content'];
+    $type = "";
+    foreach($forms as $r=>$c){
+      foreach($c as $col=>$f){
+        if($col == "content"){
+          $type = $f['type'];
+        }
+      }
+    }
+
+    #fck
+    if($type == "fck"){
+      #強制關除錯
+      ugm_module_debug_mode(0);
+      //內容#資料放「content」
+      # ======= ckedit====
+      if (!file_exists(XOOPS_ROOT_PATH . "/modules/tadtools/ck.php")) {
+        redirect_header("http://www.tad0616.net/modules/tad_uploader/index.php?of_cat_sn=50", 3, _TAD_NEED_TADTOOLS);
+      }
+      include_once XOOPS_ROOT_PATH . "/modules/tadtools/ck.php";
+      #---- 檢查資料夾
+      mk_dir(XOOPS_ROOT_PATH . "/uploads/{$module_name}");
+      mk_dir(XOOPS_ROOT_PATH . "/uploads/{$module_name}/fck");
+      mk_dir(XOOPS_ROOT_PATH . "/uploads/{$module_name}/fck/image");
+      mk_dir(XOOPS_ROOT_PATH . "/uploads/{$module_name}/fck/flash");
+      $dir_name = $module_name . "/fck";
+      #----
+      $ck = new CKEditor($dir_name, "content", $row['content'], $module_name);
+      $ck->setHeight(200);
+      $row['content'] = $ck->render();
+      #-------------------------------------
+    }elseif($type == "textarea"){
+      $row['content'] = "<textarea class='content form-control' rows='10' id='content' name='content'>{$row['content']}</textarea>";
+    }
   }
 
   #圖片

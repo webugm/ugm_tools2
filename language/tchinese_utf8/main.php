@@ -7,6 +7,8 @@
 
 //需加入模組語系
 define("_TAD_NEED_TADTOOLS", " 需要 tadtools 模組，可至<a href='http://www.tad0616.net/modules/tad_uploader/index.php?of_cat_sn=50' target='_blank'>Tad教材網</a>下載。");
+define('_TAD_EXPAND_ALL', '展開');
+define('_TAD_CONTACT_ALL', '闔起');
 
 
 define("_MD_UGMTOOLS_SMNAME1", "ugm_tools主頁");
@@ -25,6 +27,7 @@ define("_BP_AUTO_SEND_MAIL_MESSAGE", "提醒您，此郵件是系統自動回覆
 define("_BP_SEND_SUCCESS", "已收到您的訊息，我們會儘快處理、回覆，謝謝！！");
 define("_BP_FUNCTION", "功能");
 define("_BP_EXPORT", "匯出");
+define("_BP_GO_HOME", "回首頁");
 
 define("_MD_UGMMODULE_TITLE", "標題");
 define("_MD_UGMMODULE_OFSN", "父類別");

@@ -402,7 +402,7 @@ class ugmKind {
 	
 	#######################################################
 	#  取得類選項(前台)
-	#  $default：外部傳進來預設值
+	#  $default：外部傳進來預設值，一般與陣列
 	#  $enable：1 停用不顯示
 	#######################################################
 	public function get_kindOption($default, $ofsn = 0, $level = 1, $indent = "", $enable = 1) {
@@ -420,7 +420,12 @@ class ugmKind {
 		$result = $xoopsDB->query($sql) or redirect_header(XOOPS_URL, 3, web_error());
 		$options = "";
 		while ($row = $xoopsDB->fetchArray($result)) {
-			$selected = ($default == $row['sn']) ? " selected" : "";
+			if(is_array($default)){
+				$selected = (in_array($row['sn'],$default)) ? " selected" : "";
+			}else{
+				$selected = ($default == $row['sn']) ? " selected" : "";
+			}
+			
 			$options .= "<option value='{$row['sn']}'{$selected}>{$indent}{$row['title']}</option>\n";
 			$options .= $this->get_kindOption($default, $row['sn'], $downLevel, $downIndent, $enable);
 		}

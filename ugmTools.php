@@ -24,7 +24,7 @@ if (!function_exists("get_modules_system_var")) {
 		$sql = "select `{$key}`
       from " . $xoopsDB->prefix($tbl) . "
       where `kind`='{$kind}' and `name`='{$name}' and enable='1'"; //die($sql);
-		$result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, web_error());
+		$result = $xoopsDB->query($sql) or web_error($sql);
 		list($value) = $xoopsDB->fetchRow($result);
 		return $value;
 	}
@@ -794,7 +794,7 @@ function get_ForeignKeyMainOption($tbl="",$kind_select = "", $admin = true) {
 
 //檢查並傳回欲拿到資料使用的變數
 if (!function_exists("filterVar")) {
-function filterVar($var,$title = '',$required = true , $type = 'string',$filter=""){  
+function filterVar($var,$title = '',$required = true,$type='string',$filter=""){  
   #---- 過濾資料 --------------------------
   $myts = &MyTextSanitizer::getInstance();
  
@@ -802,7 +802,6 @@ function filterVar($var,$title = '',$required = true , $type = 'string',$filter=
   if($required == true and $var === ""){
     redirect_header(XOOPS_URL, 3,"{$title}為必填！");
   } 
-
   if($type == "string"){
     $var = $myts->addSlashes($var);//文字
   }elseif($type == "int"){
@@ -811,18 +810,15 @@ function filterVar($var,$title = '',$required = true , $type = 'string',$filter=
     $var = floatval($var);//小數
   }else{
     $var = $myts->addSlashes($var);//文字
-  } 
-
+  }
   if ($filter) {
     $var = filter_var($var, $filter);
     if (!$var) {
     	redirect_header(XOOPS_URL, 3,"不合法的{$title}");
     }
   } 
-
   return $var;
-}
-	
+}	
 }
 
 #################################################

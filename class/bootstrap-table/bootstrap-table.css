@@ -286,6 +286,13 @@
     left: auto;
 }
 
+.bootstrap-table .float-right {
+    float: right!important;
+}
+.bootstrap-table .float-left {
+    float: left!important;
+}
+
 /* calculate scrollbar width */
 p.fixed-table-scroll-inner {
     width: 100%;
