@@ -3,12 +3,14 @@ defined('XOOPS_ROOT_PATH') || die("XOOPS root path not defined");
 class ugmKind {
 	public $moduleName;             //模組名稱
 	public $tbl;                    //資料表(已含前置字元)
+	public $kind2procTBL;           //類別使用檔
 	public $kind;                   //類別
 	public $stopLevel = 1;          //層數
 
 	function __construct($moduleName, $kind, $stopLevel) {
 		$this->set_moduleName($moduleName);
 		$this->set_tbl($moduleName."_kind");
+		$this->set_kind2procTBL($moduleName."_kind2proc");
 		$this->set_kind($kind);
 		$this->set_stopLevel($stopLevel);
 	}
@@ -21,6 +23,12 @@ class ugmKind {
 	public function set_tbl($value) {
 		global $xoopsDB;
 		$this->tbl = $xoopsDB->prefix($value);
+	}
+
+	#設定類別使用檔資料表
+	public function set_kind2procTBL($value) {
+		global $xoopsDB;
+		$this->kind2procTBL = $xoopsDB->prefix($value);
 
 	}
 	#設定類別
@@ -472,6 +480,23 @@ class ugmKind {
 	  $result = $xoopsDB->query($sql) or redirect_header(XOOPS_URL, 3, web_error());
 	  list($sort) = $xoopsDB->fetchRow($result); 
 	  return ++$sort;
+	}
+
+	###########################################################
+	#  得到程序之類別陣列
+	#  ($col_name,$col_sn)
+	###########################################################
+	public function git_kindArray($col_name,$col_sn) {
+	  global $xoopsDB;   
+	  $sql = "select a.kind_sn
+	          from " . $this->kind2procTBL . " as a
+	          where a.`col_sn`='{$col_sn}' and a.`col_name`='{$col_name}'"; //die($sql);  
+	  $result = $xoopsDB->query($sql) or web_error($sql);
+	  $rows = array();
+	  while ($row = $xoopsDB->fetchArray($result)) { 
+	    $rows[] = $row['kind_sn'];
+	  }
+	  return $rows;
 	}
 	
 }

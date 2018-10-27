@@ -87,7 +87,6 @@ define("_MD_UGMMODULE_ALL", "全部");
 define("_MD_UGMMODULE_COUNTER", "點閱");
 
 #聯絡我們 -------------------------------------------------
-
 define("_MD_UGMMODULE_NAME", "姓名");
 define("_MD_UGMMODULE_TEL", "電話");
 define("_MD_UGMMODULE_CONTACT", "聯絡事項");

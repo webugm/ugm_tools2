@@ -285,9 +285,12 @@
           <td>&lt;{$xoops_requesturi}&gt;</td>
           <td>當前訪問頁面的URI</td>
           <td><{$xoops_requesturi}></td>
-        </tr>
-
-
+        </tr>        
+        <tr>
+          <td class="red">&lt;{$module_id}&gt;</td>
+          <td>特定模組id</td>
+          <td><{$module_id}></td>
+        </tr> 
       </tbody>
 
 

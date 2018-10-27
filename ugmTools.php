@@ -5,7 +5,7 @@ date 2018-03-10
 use
  */
 defined('XOOPS_ROOT_PATH') || die("XOOPS root path not defined");
-include_once "ugm_tools_header.php";
+include_once "ugm_tools2_header.php";
 
 
 #####################################################################################
@@ -69,6 +69,7 @@ if (!function_exists("ugm_module_set_meta")) {
           where  `conf_name`='meta_keywords'"; //die($sql);
 		$result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, web_error());
 		$DBV = $xoopsDB->fetchArray($result);
+		
 		//設定頁面關鍵字（用 , 隔開）
 		$meta_keywords = $DBV['conf_value'] ? $meta_keywords . "," . $DBV['conf_value'] : $meta_keywords;
 
