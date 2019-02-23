@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="zh_TW">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+
+    <title>育將電腦工作室</title>
+  </head>
+  <body>
+    <!-- 導航列 -->    
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container">    
+        <a class="navbar-brand" href="#">育將電腦工作室</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="readme.html">說明</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="https://thdoan.github.io/bootstrap-select/examples.html" target="_blank">套件網站</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                育將電腦工作室
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="https://www.ugm.com.tw">網站</a>
+                <div class="dropdown-divider"></div>
+              </div>
+            </li>
+          </ul>
+        </div>
+        
+      </div>
+    </nav>
+    <!-- 導航列 end -->
+    <!-- 網站內容 -->
+    <div class="container">
+    	<h6>Javascript image dropdown - multiple skin</h6>
+    	<div class="row mt-5">
+    		<div class="col-sm-6">
+    			<!-- css -->
+					<link rel="stylesheet" type="text/css" href="bootstrap-select.css" />					
+    			<!-- js -->
+    			<script src="http://localhost/x259/modules/tadtools/jquery/jquery-migrate-3.0.0.min.js" type="text/javascript"></script>
+					<script src="bootstrap-select.js"></script>
+					<!-- html -->
+  			  <select title="Select your surfboard" class="selectpicker">
+            <option>Select...</option>
+            <option data-thumbnail="img/icon-chrome.png">Chrome</option>
+            <option data-thumbnail="img/icon-firefox.png">Firefox</option>
+            <option data-thumbnail="img/icon-ie.png">IE</option>
+            <option data-thumbnail="img/icon-opera.png">Opera</option>
+            <option data-thumbnail="img/icon-safari.png">Safari</option>
+          </select>
+    			<!-- 調用插件 -->
+    			<script type="text/javascript">
+    				$(document).ready(function() {
+    					$('select.selectpicker').selectpicker({
+                  caretIcon: 'glyphicon glyphicon-menu-down'
+              });
+    				});
+    			</script>
+    		</div>
+    		<div class="col-sm-6">
+    			
+    		</div>
+    	</div>
+    </div>
+    <!-- 網站內容 end-->
+
+  </body>
+</html>

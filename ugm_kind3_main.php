@@ -1,13 +1,13 @@
 <?php
 defined('XOOPS_ROOT_PATH') || die("XOOPS root path not defined");
 /*---- 實體化類別物件  ----*/
-#取得模組名稱
-$DIRNAME = $xoopsModule->getVar('dirname');
+#取得模組名稱(從 interface_menu.php)
+//$module_name = $xoopsModule->getVar('dirname');
 #實體化 類別物件
 $stopLevel = $foreign[$kind]['stopLevel']; //層數
 
 #(模組名稱,關鍵字，層數)
-$ugmKind = new ugmKind($DIRNAME,$kind,$stopLevel);
+$ugmKind = new ugmKind($module_name,$kind,$stopLevel);
 # 如果資料表非預設 請自行設定
 # $ugmKind -> set_tbl($tbl)
 /*------------------------*/
@@ -17,7 +17,7 @@ case "opUpdateSort": //更新排序
   #ajax必須關除錯
   ugm_module_debug_mode(0);//強制關除錯
   echo opUpdateSort();
-  transaction($DIRNAME,$kind,$stopLevel);
+  transaction($module_name,$kind,$stopLevel);
   XoopsCache::clear();
   exit;
 
@@ -25,7 +25,7 @@ case "opSaveDrag": //移動類別儲存
   #ajax必須關除錯
   ugm_module_debug_mode(0);//強制關除錯
   echo opSaveDrag();
-  transaction($DIRNAME,$kind,$stopLevel);
+  transaction($module_name,$kind,$stopLevel);
   XoopsCache::clear();
   exit;
 //更新狀態
@@ -33,7 +33,7 @@ case "opUpdateEnable":
   #ajax必須關除錯
   ugm_module_debug_mode(0);//強制關除錯
   opUpdateEnable();
-  transaction($DIRNAME,$kind,$stopLevel);
+  transaction($module_name,$kind,$stopLevel);
   XoopsCache::clear();
   redirect_header($_SESSION['returnUrl'], 3, _BP_SUCCESS);
   exit;
@@ -43,7 +43,7 @@ case "opUpdateTarget":
   #ajax必須關除錯
   ugm_module_debug_mode(0);//強制關除錯
   opUpdateTarget();
-  transaction($DIRNAME,$kind,$stopLevel);
+  transaction($module_name,$kind,$stopLevel);
   XoopsCache::clear();
   redirect_header($_SESSION['returnUrl'], 3, _BP_SUCCESS);
   exit;
@@ -51,7 +51,7 @@ case "opUpdateTarget":
 //新增資料
 case "opInsert":
   opInsert();
-  transaction($DIRNAME,$kind,$stopLevel);
+  transaction($module_name,$kind,$stopLevel);
   XoopsCache::clear();
   redirect_header($_SESSION['returnUrl'], 3, _BP_SUCCESS);
   exit;
@@ -59,7 +59,7 @@ case "opInsert":
 //編輯資料
 case "opUpdate":
   opUpdate($sn);
-  transaction($DIRNAME,$kind,$stopLevel);
+  transaction($module_name,$kind,$stopLevel);
   XoopsCache::clear();
   redirect_header($_SESSION['returnUrl'], 3, _BP_SUCCESS);
   exit;
@@ -67,7 +67,7 @@ case "opUpdate":
 //新增資料
 case "opAllInsert":
   opAllInsert();
-  transaction($DIRNAME,$kind,$stopLevel);
+  transaction($module_name,$kind,$stopLevel);
   XoopsCache::clear();
   redirect_header($_SESSION['returnUrl'], 3, _BP_SUCCESS);
   exit;
@@ -80,7 +80,7 @@ case "opForm":
 //刪除資料
 case "opDelete":
   opDelete($sn);
-  transaction($DIRNAME,$kind,$stopLevel);
+  transaction($module_name,$kind,$stopLevel);
   XoopsCache::clear();
   redirect_header($_SESSION['returnUrl'], 3, _BP_DEL_SUCCESS);
   exit;
@@ -98,14 +98,13 @@ default:
 /*-----------秀出結果區--------------*/
 #CSS
 $xoTheme->addStylesheet(XOOPS_URL . "/modules/ugm_tools2/css/forms.css");
-$xoTheme->addStylesheet(XOOPS_URL . "/modules/ugm_tools2/css/module_b3.css");
+$xoTheme->addStylesheet(XOOPS_URL . "/modules/{$module_name}/css/module.css");
 $file_name = basename($_SERVER['PHP_SELF']);
 // $moduele_admin = new ModuleAdmin();
 // $xoopsTpl->assign("Navigation", $moduele_admin->addNavigation($file_name));
 $xoopsTpl->assign("labelTitle", $foreign[$kind]['title']);
 $xoopsTpl->assign("op", $op);
-//$xoopsTpl->assign("DIRNAME", $DIRNAME);
-$xoopsTpl->assign("action", $file_name);
+$xoopsTpl->assign("action", XOOPS_URL . "/modules/{$module_name}/{$file_name}");
 $xoopsTpl->assign("moduleMenu", $moduleMenu);
 
 // #相容舊版jquery(這個在這裡引入會有問題)

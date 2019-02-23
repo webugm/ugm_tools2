@@ -28,15 +28,17 @@ class dtree
     public $title_arr;
     public $cate_arr;
     public $url_arr;
+    public $target_opt;
     public $home;
 
     //«Øºc¨ç¼Æ
-    public function __construct($name = "", $home = "", $title_arr = "", $cate_arr = "", $url_arr = "")
+    public function __construct($name = "", $home = "", $title_arr = "", $cate_arr = "", $url_arr = "", $target_arr = "")
     {
         $this->name      = $name;
         $this->title_opt = $title_arr;
         $this->cate_opt  = $cate_arr;
         $this->url_opt   = $url_arr;
+        $this->target_opt   = $target_arr;
         $this->home      = $home;
     }
 
@@ -66,7 +68,7 @@ class dtree
         }
 
         foreach ($this->title_opt as $ncsn => $title) {
-            $opt .= "{$this->name}.add($ncsn , {$this->cate_opt[$ncsn]} , '{$title}' , '{$this->url_opt[$ncsn]}', null, null, null, null, '$open');\n";
+            $opt .= "{$this->name}.add($ncsn , {$this->cate_opt[$ncsn]} , '{$title}' , '{$this->url_opt[$ncsn]}', null, {$this->target_opt[$ncsn]}, null, null, '$open');\n";
         }
 
         $dtree .= "

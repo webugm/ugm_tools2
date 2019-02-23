@@ -392,7 +392,7 @@ class ugmUpFiles {
             order by sort
             limit 1
             "; //die($sql);
-		$result = $xoopsDB->queryF($sql) or redirect_header($_SERVER['PHP_SELF'], 3, web_error());
+		$result = $xoopsDB->queryF($sql) or web_error($sql);
 		$row = $xoopsDB->fetchArray($result);
 		if ($row['kind'] == "file") {
 				$thumb_pic = TADTOOLS_URL . "/multiple-file-upload/downloads.png";
@@ -402,6 +402,32 @@ class ugmUpFiles {
 					$thumb_pic = $this->ugmUpFilesThumbUrl.$row['file_name'];
 				}else{					
 					$thumb_pic = $this->ugmUpFilesImgUrl.$row['file_name'];
+				}
+			}else{
+				$thumb_pic = "";
+			}
+		}
+		return $thumb_pic;
+	}
+	//顯示圖片路徑
+	public function get_rowPicSingleDir($col_name,$col_sn,$thumb) {
+		global $xoopsDB;
+		$sql = "select * 
+				from `{$this->tbl}`
+            where `col_name`='{$col_name}' and `col_sn`='{$col_sn}'
+            order by sort
+            limit 1
+            "; //die($sql);
+		$result = $xoopsDB->queryF($sql) or web_error($sql);
+		$row = $xoopsDB->fetchArray($result);
+		if ($row['kind'] == "file") {
+				$thumb_pic = TADTOOLS_PATH . "/multiple-file-upload/downloads.png";
+		}else{
+			if($row['file_name']){
+				if($thumb){
+					$thumb_pic = $this->ugmUpFilesThumbDir.$row['file_name'];
+				}else{					
+					$thumb_pic = $this->ugmUpFilesImgDir.$row['file_name'];
 				}
 			}else{
 				$thumb_pic = "";

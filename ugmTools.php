@@ -119,10 +119,10 @@ if (!function_exists("get_ugm_module_max_sort")) {
 		if (empty($col) or empty($tbl)) {
 			return;
 		}
-		$and_key = $kind_key ? " where `$kind_key`='{$kind}'" : "";
+		$and_key = $kind_key ? " where `{$kind_key}`='{$kind}'" : "";
 
 		$sql = "select max({$col}) from " . $xoopsDB->prefix($tbl) . "{$and_key}";
-		$result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, web_error());
+		$result = $xoopsDB->query($sql) or web_error($sql);
 		list($sort) = $xoopsDB->fetchRow($result);
 		return ++$sort;
 	}
@@ -871,6 +871,25 @@ function ajaxDebug($content,$name=""){
   fwrite($f, $content); //將新的資料寫入到原始的文件中
   fclose($f);
 }
+}
+
+//自訂錯誤訊息 $color=["default primary success info warning danger"]
+if (!function_exists('b3_message')) {
+  function b3_message($content,$title="錯誤訊息",$color="danger"){
+  	$main="
+			<div class='panel panel-{$color}' style='margin-top:40px;'>
+			  <div class='panel-heading'>
+			    <h3 class='panel-title'>{$title}</h3>
+			  </div>
+			  <div class='panel-body'>
+			    {$content}
+			  </div>
+			</div>";
+
+      $main .= "<div class='text-center'><a href='javascript:history.go(-1);' class='btn btn-{$color}'>" . _TAD_BACK_PAGE . "</a></div>";
+
+      die(html5($main));
+  }
 }
 
 //取得分頁工具

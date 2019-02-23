@@ -284,7 +284,7 @@ if (!function_exists("ugm_module_system_form")) {
 			$sql = "select *
             from " . $xoopsDB->prefix($tbl) . "
             where name='{$name}' and kind='{$kind}'";
-			$result = $xoopsDB->query($sql) or mysql_error($sql);
+			$result = $xoopsDB->query($sql) or web_error($sql);
 			$row = $xoopsDB->fetchArray($result);
 		}
 

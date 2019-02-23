@@ -11,6 +11,7 @@ define('_TAD_EXPAND_ALL', '展開');
 define('_TAD_CONTACT_ALL', '闔起');
 
 
+define("_MD_UGMMODULE_MENU", "選單管理");
 define("_MD_UGMTOOLS_SMNAME1", "ugm_tools主頁");
 
 #all

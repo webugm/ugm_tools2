@@ -1,6 +1,6 @@
 /**
  * @author zhixin wen <wenzhixin2010@gmail.com>
- * version: 1.12.1
+ * version: 1.12.2
  * https://github.com/wenzhixin/bootstrap-table/
  */
 
@@ -15,45 +15,25 @@
         bootstrapVersion = parseInt($.fn.dropdown.Constructor.VERSION, 10);
     } catch (e) {}
     var bs = {
-        // 3: {
-        //     buttonsClass: 'default',
-        //     iconsPrefix: 'glyphicon',
-        //     icons: {
-        //         paginationSwitchDown: 'glyphicon-collapse-down icon-chevron-down',
-        //         paginationSwitchUp: 'glyphicon-collapse-up icon-chevron-up',
-        //         refresh: 'glyphicon-refresh icon-refresh',
-        //         toggleOff: 'glyphicon-list-alt icon-list-alt',
-        //         toggleOn: 'glyphicon-list-alt icon-list-alt',
-        //         columns: 'glyphicon-th icon-th',
-        //         detailOpen: 'glyphicon-plus icon-plus',
-        //         detailClose: 'glyphicon-minus icon-minus',
-        //         fullscreen: 'glyphicon-fullscreen'
-        //     },
-        //     pullClass: 'pull',
-        //     toobarDropdowHtml: ['<ul class="dropdown-menu" role="menu">', '</ul>'],
-        //     toobarDropdowItemHtml: '<li role="menuitem"><label>%s</label></li>',
-        //     pageDropdownHtml: ['<ul class="dropdown-menu" role="menu">', '</ul>'],
-        //     pageDropdownItemHtml: '<li role="menuitem" class="%s"><a href="#">%s</a></li>'
-        // },
         3: {
-            buttonsClass: 'secondary',
-            iconsPrefix: 'fa',
+            buttonsClass: 'default',
+            iconsPrefix: 'glyphicon',
             icons: {
-                paginationSwitchDown: 'fa-toggle-down',
-                paginationSwitchUp: 'fa-toggle-up',
-                refresh: 'fa-refresh',
-                toggleOff: 'fa-toggle-off',
-                toggleOn: 'fa-toggle-on',
-                columns: 'fa-th-list',
-                detailOpen: 'fa-plus',
-                detailClose: 'fa-minus',
-                fullscreen: 'fa-arrows-alt'
+                paginationSwitchDown: 'glyphicon-collapse-down icon-chevron-down',
+                paginationSwitchUp: 'glyphicon-collapse-up icon-chevron-up',
+                refresh: 'glyphicon-refresh icon-refresh',
+                toggleOff: 'glyphicon-list-alt icon-list-alt',
+                toggleOn: 'glyphicon-list-alt icon-list-alt',
+                columns: 'glyphicon-th icon-th',
+                detailOpen: 'glyphicon-plus icon-plus',
+                detailClose: 'glyphicon-minus icon-minus',
+                fullscreen: 'glyphicon-fullscreen'
             },
-            pullClass: 'float',
-            toobarDropdowHtml: ['<div class="dropdown-menu dropdown-menu-right">', '</div>'],
-            toobarDropdowItemHtml: '<label class="dropdown-item">%s</label>',
-            pageDropdownHtml: ['<div class="dropdown-menu">', '</div>'],
-            pageDropdownItemHtml: '<a class="dropdown-item %s" href="#">%s</a>'
+            pullClass: 'pull',
+            toobarDropdowHtml: ['<ul class="dropdown-menu" role="menu">', '</ul>'],
+            toobarDropdowItemHtml: '<li role="menuitem"><label>%s</label></li>',
+            pageDropdownHtml: ['<ul class="dropdown-menu" role="menu">', '</ul>'],
+            pageDropdownItemHtml: '<li role="menuitem" class="%s"><a href="#">%s</a></li>'
         },
         4: {
             buttonsClass: 'secondary',

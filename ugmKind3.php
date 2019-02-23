@@ -72,7 +72,7 @@ class ugmKind {
 		$sql = "select sn
             from `{$this->tbl}`
             where ofsn='{$sn}'"; // return $sql;	
-		$result = $xoopsDB->query($sql) or redirect_header(XOOPS_URL, 3, web_error());
+		$result = $xoopsDB->query($sql) or web_error($sql);
 
 		while ($row = $xoopsDB->fetchArray($result)) {
 			$downLevel_tmp = $this->get_downLevel($row['sn'], $level);
@@ -94,7 +94,7 @@ class ugmKind {
             from `{$this->tbl}`
             where sn='{$sn}'"; // die($sql);
 
-	  $result = $xoopsDB->query($sql)  or redirect_header(XOOPS_URL, 3, web_error());	          
+	  $result = $xoopsDB->query($sql)  or web_error($sql);	          
 	  list($ofsn) = $xoopsDB->fetchRow($result); 
 
 		if (!$ofsn) {
@@ -145,7 +145,7 @@ class ugmKind {
 		$sql = "select * from `{$this->tbl}`
             where `ofsn`='{$ofsn}' and `kind`='{$this->kind}'{$andKey} 
             order by sort"; //die($sql);
-		$result = $xoopsDB->query($sql) or redirect_header(XOOPS_URL, 3, web_error());
+		$result = $xoopsDB->query($sql) or web_error($sql);
 
 		#--------------------------------------------------------------------
 		$rows = [];
@@ -251,9 +251,7 @@ class ugmKind {
 			    </tr>
 			  </tfoot>
 			</table>
-		";
-		
-
+		";	
 		return $html;
 	}
 	################################################################
@@ -375,7 +373,7 @@ class ugmKind {
 		}
 		$sql = "select * from `$this->tbl` where sn='{$sn}'"; //die($sql);
 
-		$result = $xoopsDB->query($sql) or redirect_header(XOOPS_URL, 3, web_error());	 
+		$result = $xoopsDB->query($sql) or web_error($sql);	 
 		$row = $xoopsDB->fetchArray($result);
 		return $row;
 	}
@@ -398,7 +396,7 @@ class ugmKind {
 						from `{$this->tbl}`
             where ofsn='{$ofsn}' and kind='{$this->kind}'{$andKey}
             order by sort"; //die($sql);
-		$result = $xoopsDB->query($sql) or redirect_header(XOOPS_URL, 3, web_error());
+		$result = $xoopsDB->query($sql) or web_error($sql);
 		$options = "";
 		while ($row = $xoopsDB->fetchArray($result)) {
 			$selected = ($default == $row['sn']) ? " selected" : "";
@@ -425,7 +423,7 @@ class ugmKind {
 						from `{$this->tbl}`
             where ofsn='{$ofsn}' and kind='{$this->kind}'{$andKey}
             order by sort"; //die($sql);
-		$result = $xoopsDB->query($sql) or redirect_header(XOOPS_URL, 3, web_error());
+		$result = $xoopsDB->query($sql) or web_error($sql);
 		$options = "";
 		while ($row = $xoopsDB->fetchArray($result)) {
 			if(is_array($default)){
@@ -436,6 +434,48 @@ class ugmKind {
 			
 			$options .= "<option value='{$row['sn']}'{$selected}>{$indent}{$row['title']}</option>\n";
 			$options .= $this->get_kindOption($default, $row['sn'], $downLevel, $downIndent, $enable);
+		}
+		return $options;
+	}
+
+	#######################################################
+	#  取得類選項(前台)
+	#  $default：外部傳進來預設值，一般與陣列
+	#  $enable：1 停用不顯示
+	#  顯示圖片
+	#######################################################
+	public function get_kindPicOption($default, $ofsn = 0, $level = 1, $indent = "", $enable = 1) {
+		global $xoopsDB;
+		if ($level > $this->stopLevel) {
+			return;
+		}
+		$andKey = $enable ? " and `enable`='{$enable}'":"";
+		$downIndent .= "&nbsp;&nbsp;&nbsp;&nbsp;";
+		$downLevel = $level + 1;
+		$sql = "select * 
+						from `{$this->tbl}`
+            where ofsn='{$ofsn}' and kind='{$this->kind}'{$andKey}
+            order by sort"; //die($sql);
+		$result = $xoopsDB->query($sql) or web_error($sql);
+		$options = "";
+		while ($row = $xoopsDB->fetchArray($result)) {
+			if(is_array($default)){
+				$selected = (in_array($row['sn'],$default)) ? " selected" : "";
+			}else{
+				$selected = ($default == $row['sn']) ? " selected" : "";
+			}
+
+		  #----單檔圖片上傳
+		  $moduleName = $this->moduleName; //專案名稱
+		  $subdir = $this->kind; //子目錄
+		  $col_name = $this->kind;//資料表關鍵字
+		  $col_sn = $row['sn'];//商品流水號
+		  $thumb = false ; //顯示縮圖
+		  $ugmUpFiles = new ugmUpFiles($moduleName, $subdir);//實體化
+		  $pic = $ugmUpFiles->get_rowPicSingleUrl($col_name,$col_sn,$thumb);
+		  #-----------------------------------	
+			$options .= "<option value='{$row['sn']}'{$selected} data-image='{$pic}'>{$indent}{$row['title']}</option>\n";
+			$options .= $this->get_kindPicOption($default, $row['sn'], $downLevel, $downIndent, $enable);
 		}
 		return $options;
 	}
@@ -457,7 +497,7 @@ class ugmKind {
 						from `{$this->tbl}`
             where ofsn='{$ofsn}' and kind='{$this->kind}'{$andKey}
             order by sort"; //die($sql);
-		$result = $xoopsDB->query($sql) or redirect_header(XOOPS_URL, 3, web_error());
+		$result = $xoopsDB->query($sql) or web_error($sql);
 		$options = "";
 		while ($row = $xoopsDB->fetchArray($result)) {
 			$selected = ($default == $row['title']) ? " selected" : "";
@@ -477,7 +517,7 @@ class ugmKind {
 	          from `{$this->tbl}`
 	          where ofsn='{$ofsn}' and kind='{$this->kind}'";//die($sql);
 
-	  $result = $xoopsDB->query($sql) or redirect_header(XOOPS_URL, 3, web_error());
+	  $result = $xoopsDB->query($sql) or web_error($sql);
 	  list($sort) = $xoopsDB->fetchRow($result); 
 	  return ++$sort;
 	}
@@ -486,7 +526,7 @@ class ugmKind {
 	#  得到程序之類別陣列
 	#  ($col_name,$col_sn)
 	###########################################################
-	public function git_kindArray($col_name,$col_sn) {
+	public function get_kindArray($col_name,$col_sn) {
 	  global $xoopsDB;   
 	  $sql = "select a.kind_sn
 	          from " . $this->kind2procTBL . " as a

@@ -41,6 +41,7 @@ if (!function_exists("chk_isColumn")) {
 	}
 }
 
+
 //檢查ugm modules 的 system (name and kind)是否有變數
 if (!function_exists("check_ugm_module_system_nameKind")) {
 	function check_ugm_module_system_nameKind($name, $kind, $tbl) {
@@ -53,11 +54,70 @@ if (!function_exists("check_ugm_module_system_nameKind")) {
 		if (empty($sn)) {
 			return false;
 		}
-
 		return true;
 	}
 }
 
+//檢查ugm modules 的 kind (kind and ps)是否有變數 1.12
+if (!function_exists("check_ugm_module_kind_kindPs")) {
+	function check_ugm_module_kind_kindPs($kind, $ps, $tbl) {
+		global $xoopsDB;
+		$sql = "select sn
+        from " . $xoopsDB->prefix($tbl) . "
+        where `kind`='{$kind}' and `ps`='{$ps}'"; //die($sql);
+		$result = $xoopsDB->query($sql);
+		list($sn) = $xoopsDB->fetchRow($result);
+		return $sn;
+	}
+}
+
+//檢查ugm modules 的 block_format (kind_sn and block)是否有變數 1.12
+if (!function_exists("check_ugm_module_block_format_kind_snBlock")) {
+	function check_ugm_module_block_format_kind_snBlock($kind_sn, $block, $tbl) {
+		global $xoopsDB;
+		$sql = "select sn
+        from " . $xoopsDB->prefix($tbl) . "
+        where `kind_sn`='{$kind_sn}' and `block`='{$block}'"; //die($sql);
+		$result = $xoopsDB->query($sql);
+		list($sn) = $xoopsDB->fetchRow($result);
+		return $sn;
+	}
+}
+
+//處理前將 「ugm_theme_2_kind」=> kind='block' 的 col_sn 設為 1 (1.12)
+if (!function_exists("setup_ugm_module_kind")) {
+	function setup_ugm_module_kind($kind,$col_sn,$tbl) {
+		global $xoopsDB;
+    $sql="UPDATE `" . $xoopsDB->prefix($tbl) . "` SET
+            `col_sn` = '{$col_sn}'
+            WHERE `kind` = '{$kind}'
+         ";
+    $xoopsDB->queryF($sql) or web_error($sql);
+	}
+}
+
+//處理後把 「ugm_theme_2_kind」=> kind='block' col_sn=1 刪除，且把「ugm_theme_2_block_format」kind_sn 刪除 (1.12)
+if (!function_exists("delete_ugm_module_kind")) {
+	function delete_ugm_module_kind($kind,$col_sn,$tbl,$tbl_block_format) {
+		global $xoopsDB;
+
+		$sql = "select sn
+        from " . $xoopsDB->prefix($tbl) . "
+        where `kind`='{$kind}' and `col_sn`='{$col_sn}'"; //die($sql);
+		$result = $xoopsDB->query($sql);
+		while(list($kind_sn) = $xoopsDB->fetchRow($result)){
+			$sql="DELETE FROM `" . $xoopsDB->prefix($tbl_block_format) . "`
+ 						WHERE `kind_sn` = '{$kind_sn}'
+			";
+      $xoopsDB->queryF($sql) or web_error($sql);
+		}
+
+		$sql="DELETE FROM `" . $xoopsDB->prefix($tbl) . "`
+					WHERE `kind`='{$kind}' and `col_sn`='{$col_sn}'
+		";
+    $xoopsDB->queryF($sql) or web_error($sql);
+	}
+}
 #----建立類
 
 ########################################
@@ -229,5 +289,20 @@ if (!function_exists("creat_group")) {
 	  $new_group->setVar("description", "請勿修改、刪除群組名稱，否則會造成模組運作不正確。");
 	  $member_handler->insertGroup($new_group);
 	  return ;
+	}
+}
+
+//從群組名稱取得群組編號
+if (!function_exists("getGroupIdFromName")) {
+	function getGroupIdFromName($gname="")
+	{
+	  $member_handler = xoops_gethandler('member');
+	  $group = $member_handler->getGroupList();
+	  foreach($group as $gid=>$group_name){
+	    if($group_name == $gname){
+	      return $gid;
+	    }
+	  }
+	  return;
 	}
 }
