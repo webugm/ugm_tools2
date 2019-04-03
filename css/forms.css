@@ -72,7 +72,7 @@ input[type=text],input[type=password],input[type=checkbox],input[type=file],text
   display: inline-block;
 }
 
-/**/
+/* 響應式表格*/
 .rwd-table th, .rwd-table td {
   /* text-align: left; */
 }
@@ -82,6 +82,11 @@ input[type=text],input[type=password],input[type=checkbox],input[type=file],text
   font-weight: bold;
 }
 
+@media (max-width: 768px) {
+  .rwd-table th, .rwd-table td {
+    text-align: left !important;
+  }
+}
 @media (min-width: 768px) {
   .rwd-table td:before {
     display: none;

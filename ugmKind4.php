@@ -216,7 +216,7 @@ class ugmKind {
 		$count = count($listHead);
 		$html = "
 			<div class='table-responsive'>			
-				<table id='form_table' class='table table-bordered table-striped table-hover table-sm'>
+				<table id='form_table' class='table table-bordered table-striped table-hover table-condensed'>
 				  <thead class=''>
 				    <tr class='active'>
 				      {$thHtml}
@@ -241,15 +241,15 @@ class ugmKind {
 				    {$rowsHtml}
 				  </tbody>
 
-				  <tfoot>
-				    <tr>
+				  <tbody>
+				    <tr class=''>
 				      <td colspan={$count} class='text-center'>
 				        <input type='hidden' name='op' value='opAllInsert'>
 				        <input type='hidden' name='kind' value='{$this->kind}'>
 				        <button type='submit' class='btn btn-primary btn-sm'>送出</button>
 				      </td>
 				    </tr>
-				  </tfoot>
+				  </tbody>
 				</table>
 			</div>
 		";
@@ -429,7 +429,11 @@ class ugmKind {
 		$result = $xoopsDB->query($sql) or web_error($sql);
 		$options = "";
 		while ($row = $xoopsDB->fetchArray($result)) {
-			$selected = ($default == $row['sn']) ? " selected" : "";
+			if(is_array($default)){
+				$selected = (in_array($row['sn'],$default)) ? " selected" : "";
+			}else{
+				$selected = ($default == $row['sn']) ? " selected" : "";
+			}
 			$options .= "<option value='{$row['sn']}'{$selected}>{$indent}{$row['title']}</option>\n";
 			$options .= $this->get_kindOption($default, $row['sn'], $downLevel, $downIndent, $enable);
 		}
