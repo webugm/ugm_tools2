@@ -72,7 +72,8 @@
 
       //排序
       $('#sort').sortable({ opacity: 0.6, cursor: 'move', update: function() {
-          var order = $(this).sortable('serialize') + '&op=opUpdateSort';
+          var kind = $("#kind").val();
+          var order = $(this).sortable('serialize') + '&op=opUpdateSort&kind=' +kind;
           $.post('<{$SCRIPT_NAME}>', order, function(theResponse){
             swal({
               title: theResponse,

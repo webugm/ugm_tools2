@@ -245,7 +245,7 @@ class ugmKind {
 				    <tr class=''>
 				      <td colspan={$count} class='text-center'>
 				        <input type='hidden' name='op' value='opAllInsert'>
-				        <input type='hidden' name='kind' value='{$this->kind}'>
+				        <input type='hidden' name='kind' value='{$this->kind}' id='kind'>
 				        <button type='submit' class='btn btn-primary btn-sm'>送出</button>
 				      </td>
 				    </tr>

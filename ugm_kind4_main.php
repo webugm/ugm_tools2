@@ -513,7 +513,6 @@ function opUpdateSort() {
     if (!$sn) {
       continue;
     }
-
     $sql = "update " . $ugmKind->get_tbl() . " set `sort`='{$sort}' where `sn`='{$sn}'";
     $xoopsDB->queryF($sql) or die($sql);
     $sort++;

@@ -286,7 +286,7 @@ class ugmUpFiles {
 					$file_handle->no_script = false;
 
     			$rand = substr(md5(uniqid(mt_rand(), 1)), 0, 5);//取得一個5碼亂數
-          $new_filename = $rand ."_".$this->col_sn;
+					$new_filename = $rand ."_".$this->col_sn;
 
 					$file_handle->file_new_name_body = $new_filename;//重新設定新檔名
 					//print_r($file_handle);die();

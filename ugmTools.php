@@ -875,7 +875,7 @@ function ajaxDebug($content,$name=""){
 
 //自訂錯誤訊息 $color=["default primary success info warning danger"]
 if (!function_exists('b3_message')) {
-  function b3_message($content,$title="錯誤訊息",$color="danger"){
+  function b3_message($content,$title="錯誤訊息",$color="danger",$return="javascript:history.go(-1);"){
   	$main="
 			<div class='panel panel-{$color}' style='margin-top:40px;'>
 			  <div class='panel-heading'>
@@ -886,7 +886,7 @@ if (!function_exists('b3_message')) {
 			  </div>
 			</div>";
 
-      $main .= "<div class='text-center'><a href='javascript:history.go(-1);' class='btn btn-{$color}'>" . _TAD_BACK_PAGE . "</a></div>";
+      $main .= "<div class='text-center'><a href='{$return}' class='btn btn-{$color}'> 返回 </a></div>";
 
       die(html5($main));
   }
