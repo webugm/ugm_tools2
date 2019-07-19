@@ -380,6 +380,20 @@ class ugmKind {
 		$row = $xoopsDB->fetchArray($result);
 		return $row;
 	}
+
+	#以類別sn陣列，取得類別 kind['sn']=title
+	public function get_kind_sn_title_arr($kind_sn_arr) {
+		global $xoopsDB;
+		if (!$kind_sn_arr) {
+			return;
+		}		
+		$kind = [];
+		foreach($kind_sn_arr as $kind_sn){
+			$row = $this->get_rowBYsn($kind_sn);
+			$kind[$kind_sn] = $row['title'];
+		}
+		return $kind;
+	}
 	
 	#######################################################
 	#  取得父類別選單->選項(後台類別表單用)

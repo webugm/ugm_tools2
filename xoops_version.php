@@ -14,7 +14,7 @@ $modversion['image']       = 'images/logo.png';
 $modversion['dirname']     = basename(dirname(__FILE__));
 
 //---模組狀態資訊---//
-$modversion['release_date']        = '2019/05/08';
+$modversion['release_date']        = '2019/07/15';
 $modversion['module_website_url']  = 'https://github.com/webugm/ugm_tools2';
 $modversion['module_website_name'] = 'ugm_tools2';
 $modversion['module_status']       = 'release';
@@ -22,7 +22,7 @@ $modversion['author_website_url']  = 'https://www.ugm.com.tw';
 $modversion['author_website_name'] = '育將電腦工作室';
 $modversion['min_php']             = 7.0;
 $modversion['min_xoops']           = '2.5';
-$modversion['min_tadtools']        = '3.2';
+$modversion['min_tadtools']        = '3.26';
 
 //---paypal資訊---//
 $modversion['paypal']                  = array();

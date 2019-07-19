@@ -72,7 +72,7 @@ class ugmUpFiles {
 	public $multiple = true;   #多檔
 	
 	#建構元(模組名稱,子目錄(前後不含 / ))
-	function __construct($moduleName, $subdir) {		
+	function __construct($moduleName, $subdir) {
 		#設定模組名稱
 		$this->set_moduleName($moduleName);
 		#設定子目錄
@@ -434,8 +434,8 @@ class ugmUpFiles {
 			}
 		}
 		return $thumb_pic;
-	}
-	
+	}	
+
 	//得到上傳檔案src(只有一張)
 	public function get_rowFileSingleUrl($col_name,$col_sn) {
 		global $xoopsDB;
@@ -446,13 +446,77 @@ class ugmUpFiles {
                 order by sort
                 limit 1
             "; //die($sql);
-		$result = $xoopsDB->queryF($sql) or redirect_header($_SERVER['PHP_SELF'], 3, web_error() . "<p>$sql</p>");
+		$result = $xoopsDB->queryF($sql) or web_error($sql);
 		$row = $xoopsDB->fetchArray($result);
 		//以下會產生這些變數： $files_sn, $col_name, $col_sn, $sort, $kind, $file_name, $file_type, $file_size, $description
 		if ($row['files_sn'] and $row['kind'] == "file") {
 			$src = $this->ugmUpFilesUrl.$row['file_name'];
 		}
 		return $src;
+	}	
+	
+	//得到上傳檔案名檔(只有一張)
+	public function get_file_name($col_name="",$col_sn="",$sn="",$kind="url") {
+		global $xoopsDB;
+		$path = "";
+		if($sn){
+			$sql = "select *
+							from `{$this->tbl}`
+							where `sn`='{$sn}'
+							"; //die($sql);
+		}else{
+			$sql = "select *
+							from `{$this->tbl}`
+							where `col_name`='{$col_name}' and `col_sn`='{$col_sn}'
+							order by sort
+							limit 1
+							"; //die($sql);
+		}
+		$result = $xoopsDB->queryF($sql) or web_error($sql);
+		$row = $xoopsDB->fetchArray($result);
+		$name = "";
+		if($row['files_sn'] ){
+			if ($row['kind'] == "file") {
+				if($kind == "url"){
+					$name = $this->ugmUpFilesUrl.$row['file_name'];
+				}else{
+					$name = $this->ugmUpFilesDir.$row['file_name'];
+				}
+			}else{
+				if($kind == "url"){
+					$name = $this->ugmUpFilesImgUrl.$row['file_name'];
+				}else{
+					$name = $this->ugmUpFilesImgDir.$row['file_name'];
+				}
+			}
+			return $name;
+		}
+		return false;
+	}	
+
+	//得到單筆 副檔名
+	public function get_file_name_ext($col_name="",$col_sn="",$sn="") {
+		global $xoopsDB;
+		if($sn){
+			$sql = "select *
+							from `{$this->tbl}`
+							where `sn`='{$sn}'
+							"; //die($sql);
+		}else{
+			$sql = "select *
+							from `{$this->tbl}`
+							where `col_name`='{$col_name}' and `col_sn`='{$col_sn}'
+							order by sort
+							limit 1
+							"; //die($sql);
+		}
+		$result = $xoopsDB->queryF($sql) or web_error($sql);
+		$row = $xoopsDB->fetchArray($result);
+		if($row['file_name']){			
+  		$ext =  explode(".",$row['file_name']);
+			return $ext[1];
+		}
+		return false;
 	}
 
 }

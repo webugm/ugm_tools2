@@ -138,7 +138,6 @@ function opList() {
 ###########################################################
 function opForm($sn = "") {
   global $xoopsDB,$xoopsTpl,$ugmKind,$foreign,$forms,$formsSwitch,$module_name;
-  $xoopsTpl->assign('forms', $forms); 
 
   $kind = $ugmKind->get_kind(); //關鍵字
   $tbl = $ugmKind->get_tbl(); //資料表
@@ -166,11 +165,14 @@ function opForm($sn = "") {
   //設定「ofsn」欄位預設值
   $row['ofsn'] = (!isset($row['ofsn'])) ? $_GET['ofsn'] : $row['ofsn'];
   if ($stopLevel > 1) {
+    # ugm_fix 2019-07-17
     //$row['ofsnOption'] = $ugmKind->get_ofsnOption($row['ofsn']);
-    $row['ofsn'] = "<option value='0'>/</option>\n".$ugmKind->get_ofsnOption($row['ofsn']);
+    $forms[0]['ofsn']['option'] = "<option value='0'>/</option>\n".$ugmKind->get_ofsnOption($row['ofsn']);
+    //$row['ofsn'] = "<option value='0'>/</option>\n".$ugmKind->get_ofsnOption($row['ofsn']);
   }else{
     $row['ofsn'] = 0;
   }
+  
   //設定「title」欄位預設值
   $row['title'] = (!isset($row['title'])) ? "" : $row['title'];
   //設定「enable」欄位預設值
@@ -251,6 +253,9 @@ function opForm($sn = "") {
   #防止偽造表單
   $token = getTokenHTML();
   $xoopsTpl->assign("token", $token);
+  #-----------------------------------
+  $xoopsTpl->assign('forms', $forms); 
+    #-----------------------------------    
 
 }
 ###########################################################

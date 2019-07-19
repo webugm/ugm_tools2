@@ -216,9 +216,11 @@
                       <label for='<{$col}>_0'>停用</label>                    
                     </div>
                   <{elseif $cell.type == "select"}>
-                    <select name="<{$col}>" id="<{$col}>" class="form-control" size="1" >                      
-                      <{$row.$col}>
+                    <select name="<{$col}>" id="<{$col}>" class="form-control" size="1" >  
+                      <{$cell.option}>
                     </select>
+                  <{elseif $cell.type == "textarea"}>
+                    <textarea class="form-control" rows="<{$cell.height}>" id="<{$col}>" name="<{$col}>"></textarea>
                   <{elseif $cell.type == "icon"}>
 
                     <input type='text' name='<{$col}>' value='<{$row.$col}>' id='<{$col}>' class="form-control">
